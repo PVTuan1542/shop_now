@@ -3,6 +3,7 @@ import { User } from "../entities/user";
 import { dataSource } from "../ormconfig";
 import * as bcrypt from "bcrypt"
 import { JWT_SECRET, JWT_EXPIRATION, REFRESH_TOKEN_EXPIRATION } from "../untils/constant";
+import * as jwt from "jsonwebtoken";
 
 interface ResultsInterface<T> {
   data?: T;
@@ -30,7 +31,7 @@ export class UserService {
   };
   
 
-  async login(data: UserLogin): Promise<ResultsInterface<User>> {
+  async login(data: UserLogin): Promise<ResultsInterface<any>> {
     const { password, userName } = data;
     try {
       const user = await this.userRepository.findOne({
@@ -53,8 +54,26 @@ export class UserService {
         }
       }
 
+      const accessToken = jwt.sign({
+        userId: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName},
+        JWT_SECRET, { expiresIn: JWT_EXPIRATION})
+
+      const refreshToken = jwt.sign({
+        userId: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName},
+        JWT_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRATION })
+
       return {
-        data: user,
+        data: {
+          userId: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          accessToken,
+          refreshToken
+        },
         status: 201,
       }
     } catch (error) {

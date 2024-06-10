@@ -1,8 +1,5 @@
-import { Connection } from 'mysql2/promise';
 import { Request, Response } from 'express';
-import { User } from '../../entities/user';
 import { UserService } from '../../services/userService';
-import { UserRegister } from './user.interface';
 
 const userService = new UserService();
 
