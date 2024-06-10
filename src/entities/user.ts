@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   firstName: string;
@@ -13,4 +14,23 @@ export class User {
 
   @Column()
   email: string;
+
+  @Column()
+  phone: string;
+
+  @Column()
+  userName: string;
+
+  @Column()
+  encryptPassword: string;
+
+  @Column()
+  isWork: boolean;
+
+  @BeforeInsert()
+  addId() {
+    if (!this.id) {
+      this.id = uuidv4();
+    }
+  }
 }

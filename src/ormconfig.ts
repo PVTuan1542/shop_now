@@ -13,6 +13,6 @@ export const dataSource = new DataSource({
   logging: false,
   synchronize: false,
   migrations: ["./src/migrations/**/*.ts"],
-  migrationsRun: true,
-  entities: ["./src/entities"],
+  migrationsRun: false,
+  entities: ["./src/entities/**/*.ts"],
 });

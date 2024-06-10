@@ -1,14 +1,12 @@
 import { Router } from 'express';
 import { Connection } from 'mysql2/promise';
-import { getUsers, createUser } from '../controllers/userController';
+import { getUsers, registerUser } from '../controllers/user/user.controller';
 
-const userRoutes = (connection: Connection) => {
-  const router = Router();
+const router = Router();
 
-  router.get('/', getUsers(connection));
-  router.post('/', createUser(connection));
+router.get('/', getUsers);
+router.post('/register', registerUser);
+router.post('/login', registerUser);
 
-  return router;
-};
 
-export default userRoutes;
+export default router;

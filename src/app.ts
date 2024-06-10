@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import { dataSource } from './ormconfig'
+import router from './routes';
+import morgan from 'morgan';
 
 dotenv.config();
 
@@ -9,9 +11,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-console.log(dataSource)
-
-console.log(process.env.DB_DATABASE);
+app.use(morgan(':date[clf] ":method :url HTTP/:http-version" :status :res[content-length]'));
 
 dataSource.initialize()
   .then(() => {
@@ -21,7 +21,11 @@ dataSource.initialize()
     console.error("Error during Data Source initialization", err);
   });
 
+app.use('', router);
+router.get('/', (req, res) => {
+  res.send('Welcome to the homepage');
+});
 
-  app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
+});
