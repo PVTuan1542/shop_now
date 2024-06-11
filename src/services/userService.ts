@@ -4,6 +4,7 @@ import { dataSource } from "../ormconfig";
 import * as bcrypt from "bcrypt"
 import { JWT_SECRET, JWT_EXPIRATION, REFRESH_TOKEN_EXPIRATION } from "../untils/constant";
 import * as jwt from "jsonwebtoken";
+import { Token } from "../entities/token";
 
 interface ResultsInterface<T> {
   data?: T;
@@ -25,6 +26,7 @@ interface ResultsGetAll<T> {
 
 export class UserService {
   private userRepository = dataSource.getRepository(User);
+  private tokenRepository = dataSource.getRepository(Token);
 
   comparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
     return bcrypt.compare(password, hashedPassword);
@@ -65,6 +67,12 @@ export class UserService {
         firstName: user.firstName,
         lastName: user.lastName},
         JWT_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRATION })
+
+      await this.tokenRepository.save({
+        userId: user.id,
+        token: accessToken,
+        refreshToken,
+      })
 
       return {
         data: {

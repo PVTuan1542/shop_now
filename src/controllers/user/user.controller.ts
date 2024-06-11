@@ -23,7 +23,7 @@ export const getUsers = async (req: Request, res: Response) => {
 export const registerUser = async (req: Request, res: Response) => {
   const newUser = req.body;
   try {
-    const response = await userService.registerUser(newUser);
+    const response = await userService.registerUser({...newUser, isWork: true});
    
     if(!response.error) {
       res.status(201).json(response.data);

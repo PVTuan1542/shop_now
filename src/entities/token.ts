@@ -15,7 +15,7 @@ export class Token {
   token: string;
 
   @Column()
-  refreshToken: number;
+  refreshToken: string;
 
   @CreateDateColumn()
   createdAt: Date;

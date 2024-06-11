@@ -7,8 +7,8 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: shownow
-      MYSQL_USER: root
+      MYSQL_DATABASE: shopnow
+      MYSQL_USER: shopnow
       MYSQL_PASSWORD: 1234
     ports:
       - "3307:3306"

@@ -24,7 +24,7 @@ export class User {
   @Column()
   encryptPassword: string;
 
-  @Column()
+  @Column({default: true})
   isWork: boolean;
 
   @BeforeInsert()

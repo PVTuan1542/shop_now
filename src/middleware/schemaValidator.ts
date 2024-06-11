@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import Joi, { ObjectSchema } from "joi";
 
 interface ValidationError {
   message: string;
@@ -24,7 +25,7 @@ const validationOptions = {
   stripUnknown: false,
 };
 
-const schemaValidator = (schema: any, useJoiError = true): RequestHandler => {
+const schemaValidator = (schema: Joi.ObjectSchema<any>, useJoiError = true): RequestHandler => {
 
   if (!schema) {
     throw new Error(`Schema not found`);
@@ -39,6 +40,8 @@ const schemaValidator = (schema: any, useJoiError = true): RequestHandler => {
         status: "failed",
         error: "Invalid request. Please review request and try again."
       }
+
+      console.log('error validate: ', error);
 
       const joiError: JoiError = {
         status: "failed",
