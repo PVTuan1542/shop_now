@@ -52,3 +52,26 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error creating user' });
   }
 };
+
+export const sendOtp = async (req: Request, res: Response) => {
+  const { phone } = req.body;
+  try {
+    const response = await userService.getOneByPhone(phone)
+
+    if(response.error) {
+      res.status(response.status || 400).json(response.error);
+      return
+    }
+
+    const otp = await userService.sendOtp(phone) 
+
+   
+    if(!response.error) {
+      res.status(201).json(response.data);
+    } else {
+      res.status(response.status || 400).json(response.error);
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error creating user' });
+  }
+};

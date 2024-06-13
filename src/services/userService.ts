@@ -5,6 +5,7 @@ import * as bcrypt from "bcrypt"
 import { JWT_SECRET, JWT_EXPIRATION, REFRESH_TOKEN_EXPIRATION } from "../untils/constant";
 import * as jwt from "jsonwebtoken";
 import { Token } from "../entities/token";
+import { TwilioService } from "./twilioService";
 
 interface ResultsInterface<T> {
   data?: T;
@@ -27,6 +28,7 @@ interface ResultsGetAll<T> {
 export class UserService {
   private userRepository = dataSource.getRepository(User);
   private tokenRepository = dataSource.getRepository(Token);
+  private twilioService = new TwilioService();
 
   comparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
     return bcrypt.compare(password, hashedPassword);
@@ -119,6 +121,46 @@ export class UserService {
 
       return {
         data: user,
+        status: 201,
+      }
+    } catch (error) {
+      return {
+        error: error,
+        status: 500,
+      }
+    }
+  }
+  async getOneByPhone(phone: string): Promise<ResultsGetAll<User>> {
+    try {
+      const user = await this.userRepository.findOne({
+        where: {phone}
+      });
+
+      if(!user) {
+        return {
+          error: "User not found"
+        }
+      }
+
+      return {
+        data: user,
+        status: 201,
+      }
+    } catch (error) {
+      return {
+        error: error,
+        status: 500,
+      }
+    }
+  }
+
+  async sendOtp(phone: string): Promise<ResultsInterface<any>> {
+
+    try {
+      const otp = await this.twilioService.sendOTP(phone)
+
+      return {
+        data: otp,
         status: 201,
       }
     } catch (error) {
