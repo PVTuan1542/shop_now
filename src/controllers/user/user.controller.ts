@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { UserService } from '../../services/userService';
+import { TwilioService } from '../../services/twilioService';
 
 const userService = new UserService();
+const twilioService = new TwilioService();
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -49,7 +51,7 @@ export const login = async (req: Request, res: Response) => {
       res.status(response.status || 400).json(response.error);
     }
   } catch (error) {
-    res.status(500).json({ error: 'Error creating user' });
+    res.status(500).json({ error: 'Error login user' });
   }
 };
 
@@ -63,15 +65,29 @@ export const sendOtp = async (req: Request, res: Response) => {
       return
     }
 
-    const otp = await userService.sendOtp(phone) 
+    const otp = await twilioService.sendOTP(phone) 
 
-   
-    if(!response.error) {
-      res.status(201).json(response.data);
+    if(otp.success) {
+      res.status(201).json({ success: true });
+    } else {
+      res.status(response.status || 400).json(otp.error);
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error send otp' });
+  }
+};
+
+export const verifyOtp = async (req: Request, res: Response) => {
+  const { phone, code } = req.body;
+  try {
+    const response = await twilioService.verifyOTP(phone, code)
+
+    if(response.success) {
+      res.status(201).json({success: response.success});
     } else {
       res.status(response.status || 400).json(response.error);
     }
   } catch (error) {
-    res.status(500).json({ error: 'Error creating user' });
+    res.status(500).json({ error: 'Error  verify otp' });
   }
 };

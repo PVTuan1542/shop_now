@@ -11,6 +11,7 @@ interface ResultsInterface<T> {
   data?: T;
   error?: any;
   status?: number;
+  success?: boolean;
 }
 
 interface ResultsGetAll<T> {
@@ -144,23 +145,6 @@ export class UserService {
 
       return {
         data: user,
-        status: 201,
-      }
-    } catch (error) {
-      return {
-        error: error,
-        status: 500,
-      }
-    }
-  }
-
-  async sendOtp(phone: string): Promise<ResultsInterface<any>> {
-
-    try {
-      const otp = await this.twilioService.sendOTP(phone)
-
-      return {
-        data: otp,
         status: 201,
       }
     } catch (error) {
