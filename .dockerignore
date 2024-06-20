@@ -1,23 +1,10 @@
-# Node.js
-node_modules/
+node_modules
 npm-debug.log
-yarn-error.log
-package-lock.json
-
-# Dependency directories
-/bin/
-/coverage/
-/build/
-
-# Production
-/dist/
-/.env
-
-# IDE/Editor
-.vscode/
-.idea/
-*.code-workspace
-
-# OS generated files
-.DS_Store
-Thumbs.db
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+README.md
+LICENSE
+.vscode

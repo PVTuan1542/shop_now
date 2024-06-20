@@ -1,11 +1,13 @@
-ARG NODE_VERSION=18.0.0
+ARG NODE_VERSION=22.3.0
 
 FROM node:${NODE_VERSION}-alpine as base
 RUN apk update && apk add --no-cache\
   curl \
   vim \
   git
-COPY . /usr/src/shopnow
-WORKDIR /usr/src/shopnow
+WORKDIR /usr/src/app
+COPY ./package.json ./
 RUN npm install
-CMD ["npm", "run dev"]
+COPY . .
+RUN npm run build
+CMD ["npm", "run", "dev"]
