@@ -16,6 +16,7 @@ services:
       - .env
     depends_on:
       - db
+    command: /bin/sh -c "npm run migration:run"
 
   db:
     image: mysql:latest

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { UserService } from '../../services/userService';
 import { TwilioService } from '../../services/twilioService';
+import { IUserRequest } from '../../middleware/authenticate';
 
 const userService = new UserService();
 const twilioService = new TwilioService();
@@ -8,6 +9,7 @@ const twilioService = new TwilioService();
 export const getUsers = async (req: Request, res: Response) => {
   try {
     const response = await userService.getUser();
+    console.log('000000',(req as IUserRequest).user)
 
     if(!response.error) {
       res.status(201).json({
