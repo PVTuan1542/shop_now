@@ -6,7 +6,7 @@ import { authAndValidateDto, authenticate } from '../middleware/authenticate';
 
 const router = Router();
 
-router.get('/users', getUsers);
+router.get('/users',authenticate, getUsers);
 router.post('/register', schemaValidator(UserRegisterDto),  registerUser);
 router.post('/login', schemaValidator(UserLoginDto), login);
 router.post('/otp', schemaValidator(SendOtpDto), sendOtp);

@@ -1,22 +1,22 @@
 services:
-  app:
-    container_name: app_container
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    environment:
-      NODE_ENV: development
-      DB_HOST: db
-    env_file:
-      - .env
-    depends_on:
-      - db
-    command: /bin/sh -c "npm run migration:run"
+  # app:
+  #   container_name: app_container
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   # command: /bin/sh -c "npm run migration:run"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   environment:
+  #     NODE_ENV: development
+  #     DB_HOST: db
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
 
   db:
     image: mysql:latest
