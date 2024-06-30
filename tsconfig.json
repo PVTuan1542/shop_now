@@ -12,6 +12,6 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
   },
-  "include": ["src/**/*.ts", "ecosystem.config.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

@@ -12,7 +12,7 @@ export const dataSource = new DataSource({
   password: process.env.DB_PASSWORD || '',
   logging: false,
   synchronize: false,
-  migrations: ["./src/migrations/**/*.ts"],
+  migrations: [__dirname + "/migrations/**/*{.js,.ts}"],
   migrationsRun: false,
-  entities: ["./src/entities/**/*.ts"],
+  entities: [__dirname + "/entities/**/*{.js,.ts}"],
 });
