@@ -7,6 +7,6 @@ import { authenticate } from '../middleware/authenticate';
 const router = Router();
 
 // Mount user routes
-router.use('/auth', authenticate, userRoutes);
+router.use('/auth', userRoutes);
 
 export default router;

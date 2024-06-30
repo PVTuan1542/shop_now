@@ -20,7 +20,6 @@ interface IUserResponse extends Response {
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const token = req.header("Authorization")?.split(" ")?.[1];
-  console.log('99999', token)
   if(!token) {
     return res.status(401).json({message: "Authorization token is required!"});
   }
@@ -32,7 +31,6 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
       lastName: decoded.lastName
     };
 
-    console.log('user authoticate', decoded)
     return next();
   } catch (error) {
     return res.status(401).json({message: "Invalid token!"});
