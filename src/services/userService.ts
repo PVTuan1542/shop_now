@@ -117,6 +117,18 @@ export class UserService {
   async registerUser(data: UserRegister): Promise<ResultsInterface<User>> {
     const { password, ...newData } = data;
     try {
+      const findUser = await this.userRepository.findOne({
+        where: {
+          userName: data?.userName
+        }
+      })
+      
+      if(findUser) {
+        return {
+          error: "Username existing"
+        }
+      }
+      
       const encryptPassword = await bcrypt.hash(data.password, 10);
       const user = await this.userRepository.save({ ...newData, encryptPassword });
 
