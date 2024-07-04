@@ -47,4 +47,5 @@ jobs:
               rm -rf dist
             fi
             uzip -o dist.zip
-            pm2 restart all  
+            pm2 restart all 
+            sudo systemctl restart nginx
