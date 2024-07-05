@@ -10,7 +10,7 @@ jobs:
 
     steps: 
       - name: checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: setup nodejs
         uses: actions/setup-node@v2
@@ -18,10 +18,10 @@ jobs:
           node-version: '20.11'
         
       - name: Install dependencies
-        uses: npm install
+        run: npm install
       
       - name: Build project
-        uses: npm run build
+        run: npm run build
       
       - name: Achive build files
         run: zip -r dist.zip dist
