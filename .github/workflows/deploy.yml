@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           source: "dist.zip"
-          target: "home/ubuntu/shop_now/dist.zip"
+          target: "/shop_now/dist.zip"
         
       - name: Deploy EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: | 
-            cd /home/ubuntu/shop_now
+            cd /shop_now
             git pull
             if [ -d "dist" ]; then
               rm -rf dist
