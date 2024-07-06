@@ -62,6 +62,6 @@ jobs:
             if [ -d "dist" ]; then
               rm -rf dist
             fi
-            uzip -o dist.zip
+            unzip -o dist.zip
             pm2 restart all 
             sudo systemctl restart nginx
