@@ -5,8 +5,8 @@ export const UserRegisterDto = Joi.object().keys({
   lastName: Joi.string().required(),
   password: Joi.string().required(),
   userName: Joi.string().required(),
-  phone: Joi.string().min(10).max(12).optional(),
-  email: Joi.string().email().optional()
+  phone: Joi.string().min(10).max(12),
+  email: Joi.string().email().required()
 })
 
 export const UserLoginDto = Joi.object().keys({
